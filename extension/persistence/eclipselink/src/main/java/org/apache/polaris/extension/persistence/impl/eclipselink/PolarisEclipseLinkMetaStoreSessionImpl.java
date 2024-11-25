@@ -179,9 +179,11 @@ public class PolarisEclipseLinkMetaStoreSessionImpl implements PolarisMetaStoreS
         properties.put(JDBC_URL, properties.get(JDBC_URL).replace("{realm}", realm));
       }
       // Fivetran: Changes to retrieve username and password from environment variables
-      properties.put(JDBC_USER, System.getenv("POLARIS_DB_USER"));
-      properties.put(JDBC_PASSWORD, System.getenv("POLARIS_DB_PASSWORD"));
-      properties.put(JDBC_URL, System.getenv("POLARIS_JDBC_URL"));
+      if (System.getenv().containsKey("POLARIS_DB_USER")) {
+        properties.put(JDBC_USER, System.getenv("POLARIS_DB_USER"));
+        properties.put(JDBC_PASSWORD, System.getenv("POLARIS_DB_PASSWORD"));
+        properties.put(JDBC_URL, System.getenv("POLARIS_JDBC_URL"));
+      }
       properties.put(ECLIPSELINK_PERSISTENCE_XML, confFile);
 
       factory = Persistence.createEntityManagerFactory(persistenceUnitName, properties);

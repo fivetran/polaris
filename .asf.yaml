@@ -52,7 +52,6 @@ github:
           - markdown-link-check
           - build
           - regtest
-          - site
           - "Helm tests"
 
   features:
